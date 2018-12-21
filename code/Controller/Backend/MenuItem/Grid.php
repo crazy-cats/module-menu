@@ -23,6 +23,8 @@ class Grid extends \CrazyCat\Core\Controller\Backend\AbstractGridAction {
     protected function construct()
     {
         $this->init( Collection::class, GridBlock::class );
+
+        $this->collection->addFieldToFilter( 'id', [ 'eq' => $this->request->getParam( 'mid' ) ] );
     }
 
     /**

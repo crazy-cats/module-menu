@@ -20,7 +20,7 @@ return [
                 'data' => [
                     'template' => 'CrazyCat\Core::header_buttons',
                     'buttons' => [
-                        'back' => [ 'label' => __( 'Back' ), 'action' => [ 'type' => 'redirect', 'params' => [ 'url' => getUrl( 'menu/menu_item' ) ] ] ],
+                        'back' => [ 'label' => __( 'Back' ), 'action' => [ 'type' => 'redirect', 'params' => [ 'url' => getUrl( 'menu/menu_item', [ 'mid' => $this->request->getParam( 'mid' ) ] ) ] ] ],
                         'save' => [ 'label' => __( 'Save' ), 'action' => [ 'type' => 'save', 'params' => [ 'target' => '#edit-form' ] ] ],
                         'save_continue' => [ 'label' => __( 'Save and Continue' ), 'action' => [ 'type' => 'saveContinue', 'params' => [ 'target' => '#edit-form' ] ] ]
                     ]

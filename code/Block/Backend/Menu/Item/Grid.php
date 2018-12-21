@@ -33,8 +33,8 @@ class Grid extends \CrazyCat\Core\Block\Backend\AbstractGrid {
                 [ 'name' => 'stage_ids', 'label' => __( 'Stages' ), 'sort' => true, 'width' => 200, 'filter' => [ 'type' => 'select', 'source' => SourceStage::class, 'condition' => 'finset' ] ],
                 [ 'name' => 'enabled', 'label' => __( 'Enabled' ), 'sort' => true, 'width' => 130, 'filter' => [ 'type' => 'select', 'source' => SourceYesNo::class, 'condition' => 'eq' ] ],
                 [ 'label' => __( 'Actions' ), 'actions' => [
-                        [ 'name' => 'edit', 'label' => __( 'Edit' ), 'url' => getUrl( 'menu/menu/edit' ) ],
-                        [ 'name' => 'delete', 'label' => __( 'Delete' ), 'confirm' => __( 'Sure you want to remove this item?' ), 'url' => getUrl( 'menu/menu/delete' ) ]
+                        [ 'name' => 'redirect', 'label' => __( 'Edit' ), 'url' => getUrl( 'menu/menu_item/edit' ), 'params' => [ 'id' => ':id', 'mid' => $this->request->getParam( 'mid' ) ] ],
+                        [ 'name' => 'delete', 'label' => __( 'Delete' ), 'confirm' => __( 'Sure you want to remove this item?' ), 'url' => getUrl( 'menu/menu_item/delete', [ 'mid' => $this->request->getParam( 'mid' ) ] ) ]
                 ] ] ];
     }
 
@@ -43,7 +43,7 @@ class Grid extends \CrazyCat\Core\Block\Backend\AbstractGrid {
      */
     public function getSourceUrl()
     {
-        return getUrl( 'menu/menu_item/grid' );
+        return getUrl( 'menu/menu_item/grid', [ 'mid' => $this->request->getParam( 'mid' ) ] );
     }
 
 }

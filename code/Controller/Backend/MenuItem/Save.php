@@ -40,7 +40,7 @@ class Save extends \CrazyCat\Framework\App\Module\Controller\Backend\AbstractAct
         if ( !$this->request->getPost( 'to_list' ) && $id !== null ) {
             return $this->redirect( 'menu/menu_item/edit', [ Url::ID_NAME => $id ] );
         }
-        return $this->redirect( 'menu/menu_item' );
+        return $this->redirect( 'menu/menu_item', [ 'mid' => $data['menu_id'] ] );
     }
 
 }
