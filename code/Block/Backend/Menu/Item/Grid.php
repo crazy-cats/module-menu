@@ -9,6 +9,7 @@ namespace CrazyCat\Menu\Block\Backend\Menu\Item;
 
 use CrazyCat\Core\Model\Source\Stage as SourceStage;
 use CrazyCat\Core\Model\Source\YesNo as SourceYesNo;
+use CrazyCat\Menu\Model\Source\Menu as SourceMenu;
 
 /**
  * @category CrazyCat

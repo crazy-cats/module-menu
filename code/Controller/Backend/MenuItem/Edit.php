@@ -33,7 +33,7 @@ class Edit extends \CrazyCat\Framework\App\Module\Controller\Backend\AbstractAct
         $this->registry->register( 'current_model', $model );
 
         $pageTitle = $model->getId() ?
-                __( 'Edit Menu Item `%1` [ ID: %2 ]', [ $model->getData( 'name' ), $model->getId() ] ) :
+                __( 'Edit Menu Item `%1` [ ID: %2 ]', [ $model->getData( 'title' ), $model->getId() ] ) :
                 __( 'Create Menu Item' );
 
         $this->setPageTitle( $pageTitle )->render();
