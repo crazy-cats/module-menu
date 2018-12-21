@@ -9,6 +9,8 @@ namespace CrazyCat\Menu\Block\Backend\Menu\Item;
 
 use CrazyCat\Core\Model\Source\Stage as SourceStage;
 use CrazyCat\Core\Model\Source\YesNo as SourceYesNo;
+use CrazyCat\Menu\Block\Backend\Menu\Item\Edit\Type;
+use CrazyCat\Menu\Model\Source\ItemType as SourceItemType;
 use CrazyCat\Menu\Model\Source\Menu as SourceMenu;
 
 /**
@@ -33,6 +35,8 @@ class Edit extends \CrazyCat\Core\Block\Backend\AbstractEdit {
                         [ 'name' => 'identifier', 'label' => __( 'Identifier' ), 'type' => 'text', 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'enabled', 'label' => __( 'Enabled' ), 'type' => 'select', 'source' => SourceYesNo::class ],
                         [ 'name' => 'menu_id', 'label' => __( 'Menu' ), 'type' => 'select', 'source' => SourceMenu::class, 'validation' => [ 'required' => true ] ],
+                        [ 'name' => 'parent_id', 'label' => __( 'Parent' ), 'type' => 'select', 'source' => SourceMenu::class, 'validation' => [ 'required' => true ] ],
+                        [ 'name' => 'type', 'label' => __( 'Type' ), 'renderer' => Type::class, 'source' => SourceItemType::class, 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'stage_ids', 'label' => __( 'Stage' ), 'type' => 'multiselect', 'source' => SourceStage::class ]
                 ]
             ]

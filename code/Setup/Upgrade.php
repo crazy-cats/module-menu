@@ -41,8 +41,10 @@ class Upgrade extends \CrazyCat\Framework\App\Module\Setup\AbstractUpgrade {
                 [ 'name' => 'identifier', 'type' => MySql::COL_TYPE_VARCHAR, 'length' => 32, 'null' => false ],
                 [ 'name' => 'enabled', 'type' => MySql::COL_TYPE_TINYINT, 'length' => 1, 'unsign' => true, 'null' => false, 'default' => 0 ],
                 [ 'name' => 'menu_id', 'type' => MySql::COL_TYPE_INT, 'unsign' => true, 'null' => false, 'default' => 0 ],
+                [ 'name' => 'parent_id', 'type' => MySql::COL_TYPE_INT, 'unsign' => true, 'null' => false, 'default' => 0 ],
+                [ 'name' => 'type', 'type' => MySql::COL_TYPE_VARCHAR, 'length' => 32, 'null' => false ],
                 [ 'name' => 'stage_ids', 'type' => MySql::COL_TYPE_VARCHAR, 'length' => 32, 'null' => false, 'default' => '0' ],
-                [ 'name' => 'data', 'type' => MySql::COL_TYPE_TEXT ],
+                [ 'name' => 'params', 'type' => MySql::COL_TYPE_TEXT ],
                 [ 'name' => 'sort_order', 'type' => MySql::COL_TYPE_INT, 'length' => 8, 'unsign' => true, 'default' => 0 ]
         ];
         $indexes = [

@@ -23,7 +23,7 @@ class Menu extends \CrazyCat\Framework\App\Module\Model\Source\AbstractSource {
         $this->sourceData = [];
         foreach ( $objectManager->create( MenuCollection::class ) as $item ) {
             $this->sourceData[$item->getData( 'name' )] = $item->getId();
-        };
+        }
     }
 
 }
