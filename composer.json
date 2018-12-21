@@ -1,0 +1,35 @@
+{
+    "name": "crazycat/module-menu",
+    "description": "CrazyCat Module - Menu",
+    "type": "crazycat-module",
+    "license": [
+        "proprietary"
+    ],
+    "authors": [
+        {
+            "name": "Bruce Z",
+            "email": "zengliwei@163.com",
+            "homepage": "http://crazy-cat.co",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "crazycat/framework": "~1.0"
+    },
+    "require-dev": {
+        "crazycat/framework": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "CrazyCat\\Menu\\": "code/"
+        },
+        "files": [
+            "registration.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}
