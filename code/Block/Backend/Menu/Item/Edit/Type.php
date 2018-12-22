@@ -7,6 +7,7 @@
 
 namespace CrazyCat\Menu\Block\Backend\Menu\Item\Edit;
 
+use CrazyCat\Menu\Model\Source\ItemType as SourceItemType;
 use CrazyCat\Framework\App\ObjectManager;
 use CrazyCat\Framework\App\Theme\Block\Context;
 
@@ -25,13 +26,30 @@ class Type extends \CrazyCat\Core\Block\Form\Renderer\abstractRenderer {
      */
     protected $objectManager;
 
-    public function __construct( ObjectManager $objectManager, Context $context, array $data = [] )
+    /**
+     * @var \CrazyCat\Menu\Model\Source\ItemType
+     */
+    protected $sourceItemType;
+
+    public function __construct( SourceItemType $sourceItemType, ObjectManager $objectManager, Context $context, array $data = [] )
     {
         parent::__construct( $context, $data );
 
         $this->objectManager = $objectManager;
+        $this->sourceItemType = $sourceItemType;
     }
 
+    /**
+     * @return array
+     */
+    public function getItemTypes()
+    {
+        return $this->sourceItemType->getItemTypes();
+    }
+
+    /**
+     * @return array
+     */
     public function getOptions()
     {
         return $this->objectManager->create( $this->getData( 'field' )['source'] )->toOptionArray();

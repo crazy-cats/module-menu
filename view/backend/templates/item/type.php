@@ -21,6 +21,21 @@ $value = $this->getValue();
             class="<?php echo $this->getClasses(); ?>">
                 <?php echo selectOptionsHtml( $this->getOptions(), $value ); ?>
     </select>
+    <div class="source-box" id="<?php echo $this->getFieldId(); ?>-source"></div>
+
+    <script type="text/javascript">
+        // <![CDATA[
+        require( [ 'CrazyCat/Menu/js/item-type' ], function( itemType ) {
+            var itemTypes = <?php echo json_encode( $this->getItemTypes() ); ?>;
+            itemType( {
+                el: '#<?php echo $this->getFieldId(); ?>',
+                sourceBoxEl: '#<?php echo $this->getFieldId(); ?>-source',
+                paramsEl: '#data_params',
+                itemTypes: itemTypes
+            } );
+        } );
+        // ]]>
+    </script>
 
     <?php if ( $this->withWrapper() ) : ?>
     </div>

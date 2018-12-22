@@ -9,6 +9,7 @@ namespace CrazyCat\Menu\Block;
 
 use CrazyCat\Menu\Model\Menu\Collection as MenuCollection;
 use CrazyCat\Menu\Model\Menu\Item\Collection as ItemCollection;
+use CrazyCat\Menu\Model\Source\ItemType as SourceItemType;
 use CrazyCat\Framework\App\ObjectManager;
 use CrazyCat\Framework\App\Theme\Block\Context;
 
@@ -32,11 +33,17 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
      */
     protected $objectManager;
 
-    public function __construct( ObjectManager $objectManager, Context $context, array $data = [] )
+    /**
+     * @var \CrazyCat\Menu\Model\Source\ItemType
+     */
+    protected $sourceItemType;
+
+    public function __construct( SourceItemType $sourceItemType, ObjectManager $objectManager, Context $context, array $data = [] )
     {
         parent::__construct( $context, $data );
 
         $this->objectManager = $objectManager;
+        $this->sourceItemType = $sourceItemType;
     }
 
     /**
@@ -66,11 +73,19 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
         $level ++;
         $hasActivedItem = false;
         foreach ( $itemSource[$parentId] as $item ) {
-            list( $children, $hasActivedChild ) = $this->getItemTree( $itemSource, $item->getId(), $level );
-            $hasActivedItem = $hasActivedItem || $hasActivedChild;
-            $itemTree[] = $item->addData( [
-                'level' => $level,
-                'children' => $children ] );
+            if ( ( $itemDataGenerator = $this->sourceItemType->getItemDataGenerator( $item->getData( 'type' ) ) ) ) {
+                foreach ( $itemDataGenerator->generateItems( $item->setData( 'level', $level ) ) as $realItem ) {
+                    $hasActivedItem = $hasActivedItem || $realItem->getHasActivedItem();
+                    $itemTree[] = $realItem;
+                }
+            }
+            else {
+                list( $children, $hasActivedChild ) = $this->getItemTree( $itemSource, $item->getId(), $level );
+                $hasActivedItem = $hasActivedItem || $hasActivedChild;
+                $itemTree[] = $item->addData( [
+                    'level' => $level,
+                    'children' => $children ] );
+            }
         }
 
         return [ $itemTree, $hasActivedItem ];

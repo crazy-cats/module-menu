@@ -30,7 +30,8 @@ class Edit extends \CrazyCat\Core\Block\Backend\AbstractEdit {
             'general' => [
                 'label' => __( 'General' ),
                 'fields' => [
-                        [ 'name' => 'id', 'label' => __( 'ID' ), 'type' => 'hidden' ],
+                        [ 'name' => 'id', 'type' => 'hidden' ],
+                        [ 'name' => 'params', 'type' => 'hidden' ],
                         [ 'name' => 'title', 'label' => __( 'Title' ), 'type' => 'text', 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'identifier', 'label' => __( 'Identifier' ), 'type' => 'text', 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'enabled', 'label' => __( 'Enabled' ), 'type' => 'select', 'source' => SourceYesNo::class ],
