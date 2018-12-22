@@ -7,5 +7,11 @@
 /* @var $this \CrazyCat\Menu\Block\Menu */
 ?>
 <div class="menu">
-
+    <ul>
+        <?php
+        foreach ( $this->getItems() as $item ) :
+            echo $this->renderItem( $item );
+        endforeach;
+        ?>
+    </ul>
 </div>

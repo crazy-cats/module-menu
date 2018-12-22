@@ -38,6 +38,11 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
      */
     protected $sourceItemType;
 
+    /**
+     * @var array
+     */
+    protected $items;
+
     public function __construct( SourceItemType $sourceItemType, ObjectManager $objectManager, Context $context, array $data = [] )
     {
         parent::__construct( $context, $data );
@@ -96,19 +101,30 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
      */
     public function getItems()
     {
-        $itemCollection = $this->objectManager->create( ItemCollection::class )
-                ->addFieldToFilter( 'menu_id', [ 'eq' => $this->getMenu()->getId() ] )
-                ->addOrder( 'sort_order' );
+        if ( $this->items === null ) {
+            $itemCollection = $this->objectManager->create( ItemCollection::class )
+                    ->addFieldToFilter( 'menu_id', [ 'eq' => $this->getMenu()->getId() ] )
+                    ->addOrder( 'sort_order' );
 
-        $itemSource = [];
-        foreach ( $itemCollection as $item ) {
-            if ( !isset( $itemSource[$item->getData( 'parent_id' )] ) ) {
-                $itemSource[$item->getData( 'parent_id' )] = [];
+            $itemSource = [];
+            foreach ( $itemCollection as $item ) {
+                if ( !isset( $itemSource[$item->getData( 'parent_id' )] ) ) {
+                    $itemSource[$item->getData( 'parent_id' )] = [];
+                }
+                $itemSource[$item->getData( 'parent_id' )][] = $item;
             }
-            $itemSource[$item->getData( 'parent_id' )][] = $item;
+            $this->items = $this->getItemTree( $itemSource );
         }
 
-        return $this->getItemTree( $itemSource );
+        return $this->items;
+    }
+
+    /**
+     * @return string
+     */
+    public function renderItem( $item )
+    {
+        return $this->objectManager->create( Item::class )->setData( 'item', $item )->toHtml();
     }
 
     /**
@@ -116,7 +132,7 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
      */
     public function toHtml()
     {
-        if ( $this->getMenu() === null ) {
+        if ( $this->getMenu() === null || empty( $this->getItems() ) ) {
             return '';
         }
         return parent::toHtml();

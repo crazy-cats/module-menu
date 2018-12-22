@@ -70,6 +70,29 @@ class Upgrade extends \CrazyCat\Framework\App\Module\Setup\AbstractUpgrade {
         $this->conn->createTable( 'menu_item_lang', $columns, $indexes );
     }
 
+    private function createDefaultMenu()
+    {
+        $menuId = $this->conn->insert( 'menu', [
+            'name' => 'Main Menu',
+            'identifier' => 'main-menu',
+            'enabled' => '1',
+            'stage_ids' => '0' ] );
+
+        $menuItemId = $this->conn->insert( 'menu_item', [
+            'identifier' => 'home',
+            'enabled' => 1,
+            'menu_id' => $menuId,
+            'parent_id' => 0,
+            'type' => 'general',
+            'stage_ids' => '0',
+            'sort_order' => 0 ] );
+
+        $this->conn->insert( 'menu_item_lang', [
+            'id' => $menuItemId,
+            'lang' => 'en_US',
+            'title' => 'Home' ] );
+    }
+
     /**
      * @param string|null $currentVersion
      */
@@ -79,6 +102,7 @@ class Upgrade extends \CrazyCat\Framework\App\Module\Setup\AbstractUpgrade {
             $this->createMenuMainTable();
             $this->createMenuItemMainTable();
             $this->createMenuItemLangTable();
+            $this->createDefaultMenu();
         }
     }
 
