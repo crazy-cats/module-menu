@@ -30,7 +30,10 @@ class Collection extends \CrazyCat\Framework\App\Module\Model\AbstractLangCollec
     {
         if ( $this->objectManager->get( Area::class )->getCode() === Area::CODE_FRONTEND ) {
             $stage = $this->objectManager->get( StageManager::class )->getCurrentStage();
-            $this->addFieldToFilter( 'stage_ids', [ 'finset' => $stage->getId() ] );
+            $this->addFieldToFilter( [
+                    [ 'field' => 'stage_ids', 'conditions' => [ 'finset' => $stage->getId() ] ],
+                    [ 'field' => 'stage_ids', 'conditions' => [ 'finset' => 0 ] ]
+            ] );
         }
 
         parent::beforeLoad();

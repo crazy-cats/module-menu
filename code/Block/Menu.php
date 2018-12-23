@@ -66,34 +66,38 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
     }
 
     /**
+     * @param array $itemSource [ parent_id => [ item1, item2, ... ] ]
+     * @param int $parentId
+     * @param int $level
      * @return array
      */
     protected function getItemTree( $itemSource, $parentId = 0, $level = 0 )
     {
         if ( !isset( $itemSource[$parentId] ) ) {
-            return [];
+            return [ [], false ];
         }
 
         $itemTree = [];
         $level ++;
-        $hasActivedItem = false;
+        $isActived = false;
         foreach ( $itemSource[$parentId] as $item ) {
             if ( ( $itemDataGenerator = $this->sourceItemType->getItemDataGenerator( $item->getData( 'type' ) ) ) ) {
                 foreach ( $itemDataGenerator->generateItems( $item->setData( 'level', $level ) ) as $realItem ) {
-                    $hasActivedItem = $hasActivedItem || $realItem->getHasActivedItem();
+                    $isActived = $isActived || $realItem->getIsActived();
                     $itemTree[] = $realItem;
                 }
             }
             else {
                 list( $children, $hasActivedChild ) = $this->getItemTree( $itemSource, $item->getId(), $level );
-                $hasActivedItem = $hasActivedItem || $hasActivedChild;
+                $isActived = $isActived || $hasActivedChild;
                 $itemTree[] = $item->addData( [
                     'level' => $level,
+                    'is_actived' => $hasActivedChild,
                     'children' => $children ] );
             }
         }
 
-        return [ $itemTree, $hasActivedItem ];
+        return [ $itemTree, $isActived ];
     }
 
     /**
@@ -113,7 +117,7 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
                 }
                 $itemSource[$item->getData( 'parent_id' )][] = $item;
             }
-            $this->items = $this->getItemTree( $itemSource );
+            list( $this->items ) = $this->getItemTree( $itemSource );
         }
 
         return $this->items;
@@ -124,7 +128,7 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
      */
     public function renderItem( $item )
     {
-        return $this->objectManager->create( Item::class )->setData( 'item', $item )->toHtml();
+        return $this->objectManager->create( Menu\Item::class )->setData( 'item', $item )->toHtml();
     }
 
     /**
