@@ -5,7 +5,7 @@
  * See COPYRIGHT.txt for license details.
  */
 
-namespace CrazyCat\Menu\Model\Source;
+namespace CrazyCat\Menu\Model\Source\Item;
 
 use CrazyCat\Framework\App\Cache\Factory as CacheFactory;
 use CrazyCat\Framework\App\Module\Manager as ModuleManager;
@@ -17,7 +17,7 @@ use CrazyCat\Framework\App\ObjectManager;
  * @author Bruce Z <152416319@qq.com>
  * @link http://crazy-cat.co
  */
-class ItemType extends \CrazyCat\Framework\App\Module\Model\Source\AbstractSource {
+class Type extends \CrazyCat\Framework\App\Module\Model\Source\AbstractSource {
 
     const CACHE_MENU_TYPES = 'menu_types';
 

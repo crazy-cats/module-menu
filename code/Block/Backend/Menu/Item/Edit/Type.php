@@ -7,7 +7,7 @@
 
 namespace CrazyCat\Menu\Block\Backend\Menu\Item\Edit;
 
-use CrazyCat\Menu\Model\Source\ItemType as SourceItemType;
+use CrazyCat\Menu\Model\Source\Item\Type as SourceItemType;
 use CrazyCat\Framework\App\ObjectManager;
 use CrazyCat\Framework\App\Theme\Block\Context;
 
@@ -27,7 +27,7 @@ class Type extends \CrazyCat\Core\Block\Form\Renderer\abstractRenderer {
     protected $objectManager;
 
     /**
-     * @var \CrazyCat\Menu\Model\Source\ItemType
+     * @var \CrazyCat\Menu\Model\Source\Item\Type
      */
     protected $sourceItemType;
 

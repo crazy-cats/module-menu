@@ -9,7 +9,7 @@ namespace CrazyCat\Menu\Block;
 
 use CrazyCat\Menu\Model\Menu\Collection as MenuCollection;
 use CrazyCat\Menu\Model\Menu\Item\Collection as ItemCollection;
-use CrazyCat\Menu\Model\Source\ItemType as SourceItemType;
+use CrazyCat\Menu\Model\Source\Item\Type as SourceItemType;
 use CrazyCat\Framework\App\ObjectManager;
 use CrazyCat\Framework\App\Theme\Block\Context;
 
@@ -34,7 +34,7 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
     protected $objectManager;
 
     /**
-     * @var \CrazyCat\Menu\Model\Source\ItemType
+     * @var \CrazyCat\Menu\Model\Source\Item\Type
      */
     protected $sourceItemType;
 

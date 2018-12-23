@@ -39,6 +39,8 @@ class Upgrade extends \CrazyCat\Framework\App\Module\Setup\AbstractUpgrade {
         $columns = [
                 [ 'name' => 'id', 'type' => MySql::COL_TYPE_INT, 'unsign' => true, 'null' => false, 'auto_increment' => true ],
                 [ 'name' => 'identifier', 'type' => MySql::COL_TYPE_VARCHAR, 'length' => 32, 'null' => false ],
+                [ 'name' => 'url', 'type' => MySql::COL_TYPE_VARCHAR, 'length' => 256 ],
+                [ 'name' => 'target', 'type' => MySql::COL_TYPE_VARCHAR, 'length' => 8, 'null' => false ],
                 [ 'name' => 'enabled', 'type' => MySql::COL_TYPE_TINYINT, 'length' => 1, 'unsign' => true, 'null' => false, 'default' => 0 ],
                 [ 'name' => 'menu_id', 'type' => MySql::COL_TYPE_INT, 'unsign' => true, 'null' => false, 'default' => 0 ],
                 [ 'name' => 'parent_id', 'type' => MySql::COL_TYPE_INT, 'unsign' => true, 'null' => false, 'default' => 0 ],
@@ -80,6 +82,8 @@ class Upgrade extends \CrazyCat\Framework\App\Module\Setup\AbstractUpgrade {
 
         $menuItemId = $this->conn->insert( 'menu_item', [
             'identifier' => 'home',
+            'url' => 'index',
+            'target' => '_self',
             'enabled' => 1,
             'menu_id' => $menuId,
             'parent_id' => 0,
