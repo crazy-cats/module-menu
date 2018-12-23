@@ -25,7 +25,7 @@ class Grid extends \CrazyCat\Core\Controller\Backend\AbstractGridAction {
     {
         $this->init( Collection::class, GridBlock::class );
 
-        $this->collection->addFieldToFilter( 'id', [ 'eq' => $this->request->getParam( 'mid' ) ] );
+        $this->collection->addFieldToFilter( 'menu_id', [ 'eq' => $this->request->getParam( 'mid' ) ] );
     }
 
     /**
