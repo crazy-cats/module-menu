@@ -28,6 +28,7 @@ class Edit extends \CrazyCat\Core\Block\Backend\AbstractEdit {
      */
     public function getFields()
     {
+
         return [
             'general' => [
                 'label' => __( 'General' ),
@@ -40,7 +41,7 @@ class Edit extends \CrazyCat\Core\Block\Backend\AbstractEdit {
                         [ 'name' => 'target', 'label' => __( 'Target' ), 'type' => 'select', 'source' => SourceItemTarget::class, 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'enabled', 'label' => __( 'Enabled' ), 'type' => 'select', 'source' => SourceYesNo::class ],
                         [ 'name' => 'menu_id', 'label' => __( 'Menu' ), 'type' => 'select', 'source' => SourceMenu::class, 'validation' => [ 'required' => true ] ],
-                        [ 'name' => 'parent_id', 'label' => __( 'Parent Item' ), 'type' => 'select', 'source' => SourceItem::class, 'validation' => [ 'required' => true ] ],
+                        [ 'name' => 'parent_id', 'label' => __( 'Parent Item' ), 'type' => 'select', 'options' => $this->objectManager->get( SourceItem::class )->toOptionArray( false, $this->getModel()->getId() ), 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'type', 'label' => __( 'Type' ), 'renderer' => Type::class, 'source' => SourceItemType::class, 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'stage_ids', 'label' => __( 'Stages' ), 'type' => 'multiselect', 'source' => SourceStage::class, 'validation' => [ 'required' => true ] ]
                 ]
