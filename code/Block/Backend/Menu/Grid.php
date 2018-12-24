@@ -33,7 +33,7 @@ class Grid extends \CrazyCat\Core\Block\Backend\AbstractGrid {
                 [ 'name' => 'stage_ids', 'label' => __( 'Stages' ), 'sort' => true, 'width' => 200, 'filter' => [ 'type' => 'select', 'source' => SourceStage::class, 'condition' => 'finset' ] ],
                 [ 'name' => 'enabled', 'label' => __( 'Enabled' ), 'sort' => true, 'width' => 130, 'filter' => [ 'type' => 'select', 'source' => SourceYesNo::class, 'condition' => 'eq' ] ],
                 [ 'label' => __( 'Actions' ), 'actions' => [
-                        [ 'name' => 'redirect', 'label' => __( 'Items' ), 'url' => getUrl( 'menu/menu_item/index' ), 'params' => [ 'mid' => ':id' ] ],
+                        [ 'name' => 'redirect', 'label' => __( 'Menu Items' ), 'url' => getUrl( 'menu/menu_item/index' ), 'params' => [ 'mid' => ':id' ] ],
                         [ 'name' => 'edit', 'label' => __( 'Edit' ), 'url' => getUrl( 'menu/menu/edit' ) ],
                         [ 'name' => 'delete', 'label' => __( 'Delete' ), 'confirm' => __( 'Sure you want to remove this item?' ), 'url' => getUrl( 'menu/menu/delete' ) ]
                 ] ] ];

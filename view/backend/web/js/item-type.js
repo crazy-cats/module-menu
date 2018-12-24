@@ -20,15 +20,16 @@ define( [ 'jquery', 'utility' ], function( $, utility ) {
         var updateItemType = function() {
             if ( opts.itemTypes[selector.val()]['params_generating_url'] ) {
                 utility.loading( true );
+                var url = opts.itemTypes[selector.val()]['params_generating_url'];
                 $.ajax( {
-                    url: opts.itemTypes[selector.val()]['params_generating_url'],
+                    url: url + (url.indexOf( '?' ) === -1 ? '?' : '&') + 'ajax=1',
                     type: 'post',
                     dataType: 'json',
                     complete: function() {
                         utility.loading( false );
                     },
                     success: function( response ) {
-                        //sourceBox.html( '' );
+                        console.log( response );
                     }
                 } );
             } else {

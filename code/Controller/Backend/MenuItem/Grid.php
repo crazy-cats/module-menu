@@ -11,6 +11,7 @@ use CrazyCat\Core\Model\Source\Stage as SourceStage;
 use CrazyCat\Core\Model\Source\YesNo as SourceYesNo;
 use CrazyCat\Menu\Block\Backend\Menu\Item\Grid as GridBlock;
 use CrazyCat\Menu\Model\Menu\Item\Collection;
+use CrazyCat\Menu\Model\Source\Item as SourceItem;
 use CrazyCat\Menu\Model\Source\Menu as SourceMenu;
 
 /**
@@ -37,8 +38,10 @@ class Grid extends \CrazyCat\Core\Controller\Backend\AbstractGridAction {
         $sourceStage = $this->objectManager->get( SourceStage::class );
         $sourceYesNo = $this->objectManager->get( SourceYesNo::class );
         $sourceMenu = $this->objectManager->get( SourceMenu::class );
+        $sourceItem = $this->objectManager->get( SourceItem::class );
         foreach ( $collectionData['items'] as &$item ) {
             $item['menu_id'] = $sourceMenu->getLabel( $item['menu_id'] );
+            $item['parent_id'] = $sourceItem->getLabel( $item['parent_id'] );
             $item['enabled'] = $sourceYesNo->getLabel( $item['enabled'] );
             $item['stage_ids'] = $sourceStage->getLabel( $item['stage_ids'] );
         }

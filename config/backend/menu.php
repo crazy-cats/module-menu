@@ -13,7 +13,7 @@
  */
 return [
     'menu/menu/index' => [
-        'label' => __( 'Menus' ),
+        'label' => 'Menus',
         'url' => getUrl( 'menu/menu' ),
         'sort_order' => 120
     ]
