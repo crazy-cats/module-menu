@@ -43,7 +43,8 @@ class Edit extends \CrazyCat\Core\Block\Backend\AbstractEdit {
                         [ 'name' => 'menu_id', 'label' => __( 'Menu' ), 'type' => 'select', 'source' => SourceMenu::class, 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'parent_id', 'label' => __( 'Parent Item' ), 'type' => 'select', 'options' => $this->objectManager->get( SourceItem::class )->toOptionArray( false, $this->getModel()->getId() ), 'validation' => [ 'required' => true ] ],
                         [ 'name' => 'type', 'label' => __( 'Type' ), 'renderer' => Type::class, 'source' => SourceItemType::class, 'validation' => [ 'required' => true ] ],
-                        [ 'name' => 'stage_ids', 'label' => __( 'Stages' ), 'type' => 'multiselect', 'source' => SourceStage::class, 'validation' => [ 'required' => true ] ]
+                        [ 'name' => 'stage_ids', 'label' => __( 'Stages' ), 'type' => 'multiselect', 'source' => SourceStage::class, 'validation' => [ 'required' => true ] ],
+                        [ 'name' => 'sort_order', 'label' => __( 'Sort Order' ), 'type' => 'text' ]
                 ]
             ]
         ];
