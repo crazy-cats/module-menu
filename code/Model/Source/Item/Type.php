@@ -50,7 +50,7 @@ class Type extends \CrazyCat\Framework\App\Module\Model\Source\AbstractSource {
         $this->collectItemTypes();
 
         foreach ( $this->itemTypes as $typeName => $typeInfo ) {
-            $this->sourceData[$typeInfo['label']] = $typeName;
+            $this->sourceData[__( $typeInfo['label'] )] = $typeName;
         }
     }
 

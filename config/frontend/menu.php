@@ -13,7 +13,7 @@
  */
 return [
     'general' => [
-        'label' => __( 'General' ),
+        'label' => 'General',
         'params_generating_url' => null,
         'item_data_generator' => null
     ]

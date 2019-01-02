@@ -62,7 +62,7 @@ define( [ 'jquery', 'translator', 'utility' ], function( $, __, utility ) {
                          * Captions
                          */
                         html += '<tr class="captions">' +
-                                '<th class="ids"><input type="checkbox" class="input-ids" /></th>';
+                                '<th class="ids">&nbsp;</th>';
                         for ( var i in response.fields ) {
                             var field = response.fields[i];
                             html += '<th>' +
