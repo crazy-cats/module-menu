@@ -9,6 +9,7 @@ namespace CrazyCat\Menu\Controller\Backend\ItemType;
 
 use CrazyCat\Framework\App\Io\Http\Response;
 use CrazyCat\Framework\App\Module\Controller\Backend\Context;
+use CrazyCat\Framework\Utility\StaticVariable;
 
 /**
  * @category CrazyCat
@@ -19,6 +20,12 @@ use CrazyCat\Framework\App\Module\Controller\Backend\Context;
 abstract class AbstractGridAction extends \CrazyCat\Framework\App\Module\Controller\Backend\AbstractAction {
 
     const DEFAULT_PAGE_SIZE = 20;
+
+    /**
+     * field types
+     */
+    const FIELD_TYPE_SELECT = 'select';
+    const FIELD_TYPE_TEXT = 'text';
 
     /**
      * @var \CrazyCat\Framework\App\Module\Model\AbstractCollection
@@ -48,10 +55,49 @@ abstract class AbstractGridAction extends \CrazyCat\Framework\App\Module\Control
     }
 
     /**
+     * @param array|null $filters
+     * @return array
+     */
+    protected function processFilters( $filters )
+    {
+        if ( empty( $filters ) ) {
+            return [];
+        }
+
+        if ( $filters['ids'] && $filters['ids'] != StaticVariable::NO_SELECTION ) {
+            $ids = explode( StaticVariable::GENERAL_SEPARATOR, $this->request->getParam( 'ids' ) );
+            $this->collection->addFieldToFilter( $this->collection->getIdFieldName(), [ 'in' => $ids ] );
+        }
+
+        foreach ( $this->fields as $field ) {
+            if ( empty( $field['filter']['type'] ) || !isset( $filters[$field['name']] ) ) {
+                continue;
+            }
+            switch ( $field['filter']['type'] ) {
+
+                case self::FIELD_TYPE_SELECT :
+                    if ( $filters[$field['name']] != StaticVariable::NO_SELECTION ) {
+                        $this->collection->addFieldToFilter( $field['name'], [ $field['filter']['condition'] => $filters[$field['name']] ] );
+                    }
+                    break;
+
+                case self::FIELD_TYPE_TEXT :
+                    if ( !empty( $filter = trim( $filters[$field['name']] ) ) ) {
+                        $this->collection->addFieldToFilter( $field['name'], [ $field['filter']['condition'] => ( $field['filter']['condition'] == 'like' ) ? ( '%' . $filter . '%' ) : $filter ] );
+                    }
+                    break;
+            }
+        }
+
+        return $filters;
+    }
+
+    /**
      * @return void
      */
     protected function run()
     {
+        $filters = $this->processFilters( $this->request->getParam( 'filter' ) );
         $this->collection->setPageSize( $this->request->getParam( 'limit' ) ?: self::DEFAULT_PAGE_SIZE  );
 
         if ( ( $page = $this->request->getParam( 'p' ) ) ) {
@@ -59,7 +105,7 @@ abstract class AbstractGridAction extends \CrazyCat\Framework\App\Module\Control
         }
 
         $this->response->setType( Response::TYPE_JSON )->setData( [
-            'filters' => $this->request->getParam( 'filter' ),
+            'filters' => $filters,
             'fields' => $this->fields,
             'data' => $this->processData( $this->collection->toArray() )
         ] );
