@@ -83,7 +83,7 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
         foreach ( $itemSource[$parentId] as $item ) {
             if ( ( $itemDataGenerator = $this->sourceItemType->getItemDataGenerator( $item->getData( 'type' ) ) ) ) {
                 foreach ( $itemDataGenerator->generateItems( $item->setData( 'level', $level ) ) as $realItem ) {
-                    $isActived = $isActived || $realItem->getIsActived();
+                    $isActived = $isActived || $realItem->getIsActived() || $realItem->getIsCurrent();
                     $itemTree[] = $realItem;
                 }
             }

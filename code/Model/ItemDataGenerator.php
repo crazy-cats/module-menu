@@ -8,6 +8,7 @@
 namespace CrazyCat\Menu\Model;
 
 use CrazyCat\Framework\App\ObjectManager;
+use CrazyCat\Framework\App\Url;
 use CrazyCat\Menu\Model\Menu\Item as MenuItem;
 
 /**
@@ -23,9 +24,15 @@ abstract class ItemDataGenerator {
      */
     protected $objectManager;
 
-    public function __construct( ObjectManager $objectManager )
+    /**
+     * @var \CrazyCat\Framework\App\Url
+     */
+    protected $url;
+
+    public function __construct( ObjectManager $objectManager, Url $url )
     {
         $this->objectManager = $objectManager;
+        $this->url = $url;
     }
 
     /**

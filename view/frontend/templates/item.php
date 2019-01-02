@@ -7,7 +7,8 @@
 /* @var $this \CrazyCat\Menu\Block\Menu\Item */
 $item = $this->getItem();
 $itemClass = ( 'level-' . $item->getData( 'level' ) ) .
-        ( $item->getData( 'is_actived' ) ? ' actived' : '' );
+        ( $item->getData( 'is_actived' ) ? ' actived' : '' ) .
+        ( $item->getData( 'is_current' ) ? ' current' : '' );
 ?>
 <li class="menu-item <?php echo $itemClass ?>">
     <a href="<?php echo $item->getData( 'url' ); ?>">
