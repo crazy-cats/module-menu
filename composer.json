@@ -27,17 +27,6 @@
             "registration.php"
         ]
     },
-    "scripts": {
-        "post-package-install": [
-            "php index.php system:cache:clear"
-        ],
-        "post-package-update": [
-            "php index.php system:cache:clear"
-        ],
-        "post-package-uninstall": [
-            "php index.php system:cache:clear"
-        ]
-    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.x-dev"
