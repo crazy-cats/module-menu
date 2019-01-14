@@ -27,6 +27,26 @@
             "registration.php"
         ]
     },
+    "scripts": {
+        "post-package-install": [
+            "php index.php system:cache:clear components",
+            "php index.php system:cache:clear modules",
+            "php index.php system:cache:clear di",
+            "php index.php system:cache:clear languages"
+        ],
+        "post-package-update": [
+            "php index.php system:cache:clear components",
+            "php index.php system:cache:clear modules",
+            "php index.php system:cache:clear di",
+            "php index.php system:cache:clear languages"
+        ],
+        "post-package-uninstall": [
+            "php index.php system:cache:clear components",
+            "php index.php system:cache:clear modules",
+            "php index.php system:cache:clear di",
+            "php index.php system:cache:clear languages"
+        ]
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.x-dev"
