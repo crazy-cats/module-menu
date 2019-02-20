@@ -37,7 +37,7 @@ abstract class ItemDataGenerator {
 
     /**
      * @param \CrazyCat\Menu\Model\Menu\Item $menuItem
-     * @return \CrazyCat\Framework\Data\Object[]
+     * @return \CrazyCat\Framework\Data\DataObject[]
      */
     abstract public function generateItems( MenuItem $menuItem );
 }
