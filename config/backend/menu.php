@@ -14,7 +14,7 @@
 return [
     'menu/menu/index' => [
         'label' => 'Menus',
-        'url' => getUrl( 'menu/menu' ),
+        'url' => 'menu/menu',
         'sort_order' => 120
     ]
 ];
