@@ -124,11 +124,13 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
     }
 
     /**
+     * @param \CrazyCat\Menu\Block\Menu\Item $item
+     * @param string $template
      * @return string
      */
-    public function renderItem( $item )
+    public function renderItem( $item, $template = null )
     {
-        return $this->objectManager->create( Menu\Item::class )->setData( 'item', $item )->toHtml();
+        return $this->objectManager->create( Menu\Item::class, [ 'data' => [ 'template' => $template ] ] )->setData( 'item', $item )->toHtml();
     }
 
     /**

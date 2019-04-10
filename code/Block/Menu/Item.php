@@ -32,11 +32,11 @@ class Item extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
         $this->objectManager = $objectManager;
     }
 
-    public function renderChildren( $children )
+    public function renderChildren( $children, $template = null )
     {
         $html = '';
         foreach ( $children as $child ) {
-            $html .= $this->objectManager->create( Item::class )->setData( 'item', $child )->toHtml();
+            $html .= $this->objectManager->create( Item::class, [ 'data' => [ 'template' => $template ] ] )->setData( 'item', $child )->toHtml();
         }
         return $html;
     }
