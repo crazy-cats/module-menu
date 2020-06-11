@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright © 2018 CrazyCat, Inc. All rights reserved.
+ * Copyright © 2020 CrazyCat, Inc. All rights reserved.
  * See COPYRIGHT.txt for license details.
  */
 
@@ -15,12 +15,12 @@ use CrazyCat\Framework\App\Theme\Block\Context;
 
 /**
  * @category CrazyCat
- * @package CrazyCat\Menu
- * @author Bruce Z <152416319@qq.com>
- * @link http://crazy-cat.co
+ * @package  CrazyCat\Menu
+ * @author   Liwei Zeng <zengliwei@163.com>
+ * @link     https://crazy-cat.cn
  */
-class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
-
+class Menu extends \CrazyCat\Framework\App\Component\Module\Block\AbstractBlock
+{
     protected $template = 'CrazyCat\Menu::menu';
 
     /**
@@ -43,9 +43,13 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
      */
     protected $items;
 
-    public function __construct( SourceItemType $sourceItemType, ObjectManager $objectManager, Context $context, array $data = [] )
-    {
-        parent::__construct( $context, $data );
+    public function __construct(
+        SourceItemType $sourceItemType,
+        ObjectManager $objectManager,
+        Context $context,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
 
         $this->objectManager = $objectManager;
         $this->sourceItemType = $sourceItemType;
@@ -53,71 +57,75 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
 
     /**
      * @return \CrazyCat\Menu\Model\Menu|null
+     * @throws \ReflectionException
      */
     public function getMenu()
     {
-        if ( $this->menuModel === null ) {
-            $this->menuModel = $this->objectManager->create( MenuCollection::class )
-                    ->addFieldToFilter( 'identifier', [ 'eq' => $this->getData( 'identifier' ) ] )
-                    ->setPageSize( 1 )
-                    ->getFirstItem();
+        if ($this->menuModel === null) {
+            $this->menuModel = $this->objectManager->create(MenuCollection::class)
+                ->addFieldToFilter('identifier', ['eq' => $this->getData('identifier')])
+                ->setPageSize(1)
+                ->getFirstItem();
         }
         return $this->menuModel;
     }
 
     /**
      * @param array $itemSource [ parent_id => [ item1, item2, ... ] ]
-     * @param int $parentId
-     * @param int $level
+     * @param int   $parentId
+     * @param int   $level
      * @return array
      */
-    protected function getItemTree( $itemSource, $parentId = 0, $level = 0 )
+    protected function getItemTree($itemSource, $parentId = 0, $level = 0)
     {
-        if ( !isset( $itemSource[$parentId] ) ) {
-            return [ [], false ];
+        if (!isset($itemSource[$parentId])) {
+            return [[], false];
         }
 
         $itemTree = [];
-        $level ++;
-        $isActived = false;
-        foreach ( $itemSource[$parentId] as $item ) {
-            if ( ( $itemDataGenerator = $this->sourceItemType->getItemDataGenerator( $item->getData( 'type' ) ) ) ) {
-                foreach ( $itemDataGenerator->generateItems( $item->setData( 'level', $level ) ) as $realItem ) {
-                    $isActived = $isActived || $realItem->getIsActived() || $realItem->getIsCurrent();
+        $level++;
+        $isActivated = false;
+        foreach ($itemSource[$parentId] as $item) {
+            if (($itemDataGenerator = $this->sourceItemType->getItemDataGenerator($item->getData('type')))) {
+                foreach ($itemDataGenerator->generateItems($item->setData('level', $level)) as $realItem) {
+                    $isActivated = $isActivated || $realItem->getIsActived() || $realItem->getIsCurrent();
                     $itemTree[] = $realItem;
                 }
-            }
-            else {
-                list( $children, $hasActivedChild ) = $this->getItemTree( $itemSource, $item->getId(), $level );
-                $isActived = $isActived || $hasActivedChild;
-                $itemTree[] = $item->addData( [
-                    'level' => $level,
-                    'is_actived' => $hasActivedChild,
-                    'children' => $children ] );
+            } else {
+                [$children, $hasActivedChild] = $this->getItemTree($itemSource, $item->getId(), $level);
+                $isActivated = $isActivated || $hasActivedChild;
+                $itemTree[] = $item->addData(
+                    [
+                        'level'      => $level,
+                        'is_actived' => $hasActivedChild,
+                        'children'   => $children
+                    ]
+                );
             }
         }
 
-        return [ $itemTree, $isActived ];
+        return [$itemTree, $isActivated];
     }
 
     /**
      * @return array
+     * @throws \ReflectionException
      */
     public function getItems()
     {
-        if ( $this->items === null ) {
-            $itemCollection = $this->objectManager->create( ItemCollection::class )
-                    ->addFieldToFilter( 'menu_id', [ 'eq' => $this->getMenu()->getId() ] )
-                    ->addOrder( 'sort_order' );
+        if ($this->items === null) {
+            $itemCollection = $this->objectManager->create(ItemCollection::class)
+                ->addFieldToFilter('menu_id', ['eq' => $this->getMenu()->getId()])
+                ->addOrder('sort_order');
 
             $itemSource = [];
-            foreach ( $itemCollection as $item ) {
-                if ( !isset( $itemSource[$item->getData( 'parent_id' )] ) ) {
-                    $itemSource[$item->getData( 'parent_id' )] = [];
+            foreach ($itemCollection as $item) {
+                if (!isset($itemSource[$item->getData('parent_id')])) {
+                    $itemSource[$item->getData('parent_id')] = [];
                 }
-                $itemSource[$item->getData( 'parent_id' )][] = $item;
+                $itemSource[$item->getData('parent_id')][] = $item;
             }
-            list( $this->items ) = $this->getItemTree( $itemSource );
+            [$this->items] = $this->getItemTree($itemSource);
         }
 
         return $this->items;
@@ -125,23 +133,26 @@ class Menu extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
 
     /**
      * @param \CrazyCat\Menu\Block\Menu\Item $item
-     * @param string $template
+     * @param string                         $template
      * @return string
+     * @throws \ReflectionException
      */
-    public function renderItem( $item, $template = null )
+    public function renderItem($item, $template = null)
     {
-        return $this->objectManager->create( Menu\Item::class, [ 'data' => [ 'template' => $template ] ] )->setData( 'item', $item )->toHtml();
+        return $this->objectManager->create(Menu\Item::class, ['data' => ['template' => $template]])
+            ->setData('item', $item)
+            ->toHtml();
     }
 
     /**
      * @return string
+     * @throws \ReflectionException
      */
     public function toHtml()
     {
-        if ( $this->getMenu() === null || empty( $this->getItems() ) ) {
+        if ($this->getMenu() === null || empty($this->getItems())) {
             return '';
         }
         return parent::toHtml();
     }
-
 }

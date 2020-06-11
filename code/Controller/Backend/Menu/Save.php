@@ -1,46 +1,48 @@
 <?php
 
 /*
- * Copyright © 2018 CrazyCat, Inc. All rights reserved.
+ * Copyright © 2020 CrazyCat, Inc. All rights reserved.
  * See COPYRIGHT.txt for license details.
  */
 
 namespace CrazyCat\Menu\Controller\Backend\Menu;
 
 use CrazyCat\Menu\Model\Menu as Model;
-use CrazyCat\Framework\App\Url;
+use CrazyCat\Framework\App\Io\Http\Url;
 
 /**
  * @category CrazyCat
- * @package CrazyCat\Menu
- * @author Bruce Z <152416319@qq.com>
- * @link http://crazy-cat.co
+ * @package  CrazyCat\Menu
+ * @author   Liwei Zeng <zengliwei@163.com>
+ * @link     https://crazy-cat.cn
  */
-class Save extends \CrazyCat\Framework\App\Module\Controller\Backend\AbstractAction {
-
-    protected function run()
+class Save extends \CrazyCat\Framework\App\Component\Module\Controller\Backend\AbstractAction
+{
+    /**
+     * @return void
+     * @throws \ReflectionException
+     */
+    protected function execute()
     {
-        /* @var $model \CrazyCat\Framework\App\Module\Model\AbstractModel */
-        $model = $this->objectManager->create( Model::class );
+        /* @var $model \CrazyCat\Framework\App\Component\Module\Model\AbstractModel */
+        $model = $this->objectManager->create(Model::class);
 
-        $data = $this->request->getPost( 'data' );
-        if ( empty( $data[$model->getIdFieldName()] ) ) {
-            unset( $data[$model->getIdFieldName()] );
+        $data = $this->request->getPost('data');
+        if (empty($data[$model->getIdFieldName()])) {
+            unset($data[$model->getIdFieldName()]);
         }
 
         try {
-            $id = $model->addData( $data )->save()->getId();
-            $this->messenger->addSuccess( __( 'Successfully saved.' ) );
-        }
-        catch ( \Exception $e ) {
-            $id = isset( $data[Url::ID_NAME] ) ? $data[Url::ID_NAME] : null;
-            $this->messenger->addError( $e->getMessage() );
+            $id = $model->addData($data)->save()->getId();
+            $this->messenger->addSuccess(__('Successfully saved.'));
+        } catch (\Exception $e) {
+            $id = isset($data[Url::ID_NAME]) ? $data[Url::ID_NAME] : null;
+            $this->messenger->addError($e->getMessage());
         }
 
-        if ( !$this->request->getPost( 'to_list' ) && $id !== null ) {
-            return $this->redirect( 'menu/menu/edit', [ Url::ID_NAME => $id ] );
+        if (!$this->request->getPost('to_list') && $id !== null) {
+            return $this->redirect('menu/menu/edit', [Url::ID_NAME => $id]);
         }
-        return $this->redirect( 'menu/menu' );
+        return $this->redirect('menu/menu');
     }
-
 }

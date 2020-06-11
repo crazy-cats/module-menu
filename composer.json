@@ -5,19 +5,20 @@
     "license": [
         "proprietary"
     ],
+    "keywords": [
+        "PSR-12"
+    ],
     "authors": [
         {
-            "name": "Bruce Z",
+            "name": "Liwei Zeng",
             "email": "zengliwei@163.com",
-            "homepage": "http://crazy-cat.co",
+            "homepage": "https://crazy-cat.cn",
             "role": "Developer"
         }
     ],
     "require": {
-        "crazycat/framework": "~1.0"
-    },
-    "require-dev": {
-        "crazycat/framework": "dev-master"
+        "crazycat/framework": "~1.0",
+        "crazycat/module-base": "~1.0"
     },
     "autoload": {
         "psr-4": {
@@ -26,10 +27,5 @@
         "files": [
             "registration.php"
         ]
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        }
     }
 }

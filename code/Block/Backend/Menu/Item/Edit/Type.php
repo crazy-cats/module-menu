@@ -1,24 +1,20 @@
 <?php
 
 /*
- * Copyright © 2018 CrazyCat, Inc. All rights reserved.
+ * Copyright © 2020 CrazyCat, Inc. All rights reserved.
  * See COPYRIGHT.txt for license details.
  */
 
 namespace CrazyCat\Menu\Block\Backend\Menu\Item\Edit;
 
-use CrazyCat\Menu\Model\Source\Item\Type as SourceItemType;
-use CrazyCat\Framework\App\ObjectManager;
-use CrazyCat\Framework\App\Theme\Block\Context;
-
 /**
  * @category CrazyCat
- * @package CrazyCat\Menu
- * @author Bruce Z <152416319@qq.com>
- * @link http://crazy-cat.co
+ * @package  CrazyCat\Menu
+ * @author   Liwei Zeng <zengliwei@163.com>
+ * @link     https://crazy-cat.cn
  */
-class Type extends \CrazyCat\Core\Block\Form\Renderer\abstractRenderer {
-
+class Type extends \CrazyCat\Base\Block\Form\Renderer\abstractRenderer
+{
     protected $template = 'CrazyCat\Menu::item/type';
 
     /**
@@ -31,9 +27,13 @@ class Type extends \CrazyCat\Core\Block\Form\Renderer\abstractRenderer {
      */
     protected $sourceItemType;
 
-    public function __construct( SourceItemType $sourceItemType, ObjectManager $objectManager, Context $context, array $data = [] )
-    {
-        parent::__construct( $context, $data );
+    public function __construct(
+        \CrazyCat\Menu\Model\Source\Item\Type $sourceItemType,
+        \CrazyCat\Framework\App\ObjectManager $objectManager,
+        \CrazyCat\Framework\App\Component\Theme\Block\Context $context,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
 
         $this->objectManager = $objectManager;
         $this->sourceItemType = $sourceItemType;
@@ -49,10 +49,10 @@ class Type extends \CrazyCat\Core\Block\Form\Renderer\abstractRenderer {
 
     /**
      * @return array
+     * @throws \ReflectionException
      */
     public function getOptions()
     {
-        return $this->objectManager->create( $this->getData( 'field' )['source'] )->toOptionArray();
+        return $this->objectManager->create($this->getData('field')['source'])->toOptionArray();
     }
-
 }

@@ -1,23 +1,20 @@
 <?php
 
 /*
- * Copyright © 2018 CrazyCat, Inc. All rights reserved.
+ * Copyright © 2020 CrazyCat, Inc. All rights reserved.
  * See COPYRIGHT.txt for license details.
  */
 
 namespace CrazyCat\Menu\Block\Menu;
 
-use CrazyCat\Framework\App\ObjectManager;
-use CrazyCat\Framework\App\Theme\Block\Context;
-
 /**
  * @category CrazyCat
- * @package CrazyCat\Menu
- * @author Bruce Z <152416319@qq.com>
- * @link http://crazy-cat.co
+ * @package  CrazyCat\Menu
+ * @author   Liwei Zeng <zengliwei@163.com>
+ * @link     https://crazy-cat.cn
  */
-class Item extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
-
+class Item extends \CrazyCat\Framework\App\Component\Module\Block\AbstractBlock
+{
     protected $template = 'CrazyCat\Menu::item';
 
     /**
@@ -25,20 +22,24 @@ class Item extends \CrazyCat\Framework\App\Module\Block\AbstractBlock {
      */
     protected $objectManager;
 
-    public function __construct( ObjectManager $objectManager, Context $context, array $data = [] )
-    {
-        parent::__construct( $context, $data );
+    public function __construct(
+        \CrazyCat\Framework\App\ObjectManager $objectManager,
+        \CrazyCat\Framework\App\Component\Theme\Block\Context $context,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
 
         $this->objectManager = $objectManager;
     }
 
-    public function renderChildren( $children, $template = null )
+    public function renderChildren($children, $template = null)
     {
         $html = '';
-        foreach ( $children as $child ) {
-            $html .= $this->objectManager->create( Item::class, [ 'data' => [ 'template' => $template ] ] )->setData( 'item', $child )->toHtml();
+        foreach ($children as $child) {
+            $html .= $this->objectManager->create(Item::class, ['data' => ['template' => $template]])
+                ->setData('item', $child)
+                ->toHtml();
         }
         return $html;
     }
-
 }

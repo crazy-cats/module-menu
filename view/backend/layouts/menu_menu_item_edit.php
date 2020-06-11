@@ -1,24 +1,24 @@
 <?php
 
 /*
- * Copyright © 2018 CrazyCat, Inc. All rights reserved.
+ * Copyright © 2020 CrazyCat, Inc. All rights reserved.
  * See COPYRIGHT.txt for license details.
  */
 
 /**
  * @category CrazyCat
  * @package CrazyCat\Menu
- * @author Bruce Z <152416319@qq.com>
- * @link http://crazy-cat.co
+ * @author Liwei Zeng <zengliwei@163.com>
+ * @link https://crazy-cat.cn
  */
 return [
     'template' => '2columns_left',
     'blocks' => [
         'header' => [
             'header-buttons' => [
-                'class' => 'CrazyCat\Core\Block\Template',
+                'class' => 'CrazyCat\Base\Block\Template',
                 'data' => [
-                    'template' => 'CrazyCat\Core::header_buttons',
+                    'template' => 'CrazyCat\Base::header_buttons',
                     'buttons' => [
                         'back' => [ 'label' => __( 'Back' ), 'action' => [ 'type' => 'redirect', 'params' => [ 'url' => getUrl( 'menu/menu_item', [ 'mid' => $this->request->getParam( 'mid' ) ] ) ] ] ],
                         'save' => [ 'label' => __( 'Save' ), 'action' => [ 'type' => 'save', 'params' => [ 'target' => '#edit-form' ] ] ],
