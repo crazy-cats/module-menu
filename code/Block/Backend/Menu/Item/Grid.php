@@ -96,4 +96,21 @@ class Grid extends \CrazyCat\Base\Block\Backend\AbstractGrid
     {
         return $this->getUrl('menu/menu_item/grid', ['mid' => $this->request->getParam('mid')]);
     }
+
+    /**
+     * @return string
+     * @throws \Exception
+     */
+    public function toHtml()
+    {
+        return parent::toHtml() . <<<EOD
+        <script type="text/javascript">
+            // <!CDATA[
+            require(['jquery'], function ($) {
+                $('.item-menu-menu-index').addClass('active');
+            });
+            // ]]>
+        </script>
+EOD;
+    }
 }
