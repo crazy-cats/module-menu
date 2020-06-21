@@ -7,7 +7,7 @@
 
 namespace CrazyCat\Menu\Model\Source\Item;
 
-use CrazyCat\Framework\App\Cache\Factory as CacheFactory;
+use CrazyCat\Framework\App\Cache\Manager as CacheManager;
 use CrazyCat\Framework\App\Component\Module\Manager as ModuleManager;
 use CrazyCat\Framework\App\ObjectManager;
 
@@ -22,9 +22,9 @@ class Type extends \CrazyCat\Framework\App\Component\Module\Model\Source\Abstrac
     public const CACHE_MENU_TYPES = 'menu_types';
 
     /**
-     * @var \CrazyCat\Framework\App\Cache\Factory
+     * @var \CrazyCat\Framework\App\Cache\Manager
      */
-    protected $cacheFactory;
+    protected $cacheManager;
 
     /**
      * @var \CrazyCat\Framework\App\Component\Module\Manager
@@ -41,9 +41,9 @@ class Type extends \CrazyCat\Framework\App\Component\Module\Model\Source\Abstrac
      */
     protected $itemTypes;
 
-    public function __construct(ObjectManager $objectManager, CacheFactory $cacheFactory, ModuleManager $moduleManager)
+    public function __construct(ObjectManager $objectManager, CacheManager $cacheManager, ModuleManager $moduleManager)
     {
-        $this->cacheFactory = $cacheFactory;
+        $this->cacheManager = $cacheManager;
         $this->moduleManager = $moduleManager;
         $this->objectManager = $objectManager;
 
@@ -59,7 +59,7 @@ class Type extends \CrazyCat\Framework\App\Component\Module\Model\Source\Abstrac
      */
     protected function collectItemTypes()
     {
-        $cacheItemTypes = $this->cacheFactory->create(self::CACHE_MENU_TYPES);
+        $cacheItemTypes = $this->cacheManager->create(self::CACHE_MENU_TYPES);
         if (empty($this->itemTypes = $cacheItemTypes->getData())) {
             foreach ($this->moduleManager->getEnabledModules() as $module) {
                 if (is_file(($file = $module->getData('dir') . DS . 'config' . DS . 'frontend' . DS . 'menu.php')) &&
