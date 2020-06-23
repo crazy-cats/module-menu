@@ -11,7 +11,7 @@ use CrazyCat\Menu\Model\Menu\Collection as MenuCollection;
 use CrazyCat\Menu\Model\Menu\Item\Collection as ItemCollection;
 use CrazyCat\Menu\Model\Source\Item\Type as SourceItemType;
 use CrazyCat\Framework\App\ObjectManager;
-use CrazyCat\Framework\App\Theme\Block\Context;
+use CrazyCat\Framework\App\Component\Theme\Block\Context;
 
 /**
  * @category CrazyCat
