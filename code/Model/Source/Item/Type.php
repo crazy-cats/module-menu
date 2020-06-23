@@ -73,7 +73,7 @@ class Type extends \CrazyCat\Framework\App\Component\Module\Model\Source\Abstrac
 
     /**
      * @param string $type
-     * @return
+     * @return \CrazyCat\Menu\Model\ItemDataGenerator|null
      * @throws \ReflectionException
      */
     public function getItemDataGenerator($type)
