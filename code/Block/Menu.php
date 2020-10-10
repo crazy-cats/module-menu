@@ -21,6 +21,8 @@ use CrazyCat\Framework\App\Component\Theme\Block\Context;
  */
 class Menu extends \CrazyCat\Framework\App\Component\Module\Block\AbstractBlock
 {
+    public const CACHE_KEY = 'menu';
+
     protected $template = 'CrazyCat\Menu::menu';
 
     /**
